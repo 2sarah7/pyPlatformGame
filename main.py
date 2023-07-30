@@ -40,17 +40,23 @@ def main():
         playerX += player_vel
 
     #Player jump
+    #playerIsJumping - says if player is currently jumping, checks if player is not, then they can jump
     if not playerIsJumping:
+        #When key is pressed, playerIsJumping says that the player is currently jumping and cannot innitate another jump until it is finished
         if keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]:
             playerIsJumping = True
+            #Becuae it is true, the code now runs the else block
     else:
+        #Makes the character jump in a positive direction until at playerJumpHeight
         if playerJumpHeight >= -j:
             neg = 1
             if playerJumpHeight < 0:
                 neg = -1
+            #Creates parabloic jump trajectory and neg controls direction (up or down)
             playerY -= (playerJumpHeight  ** 2) * 0.5 * neg
             playerJumpHeight -= 1
         else:
+            #Once jump is done, playerIsJumping is set to false again
             playerIsJumping = False
             playerJumpHeight = j
     
