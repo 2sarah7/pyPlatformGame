@@ -18,11 +18,14 @@ PLAYER_HEIGHT = 20
 playerX = WINDOW_HEIGHT // 2 - PLAYER_WIDTH // 2
 playerY = WINDOW_HEIGHT - PLAYER_HEIGHT
 player_vel = 5
-playerJumpHeight = 10
+j = 8
+playerJumpHeight = j
 playerIsJumping = False
 
 
-while True:
+def main():
+    global playerX, playerY, playerJumpHeight, playerIsJumping
+
     #Quits pygame when told to
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,7 +44,7 @@ while True:
         if keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]:
             playerIsJumping = True
     else:
-        if playerJumpHeight >= -10:
+        if playerJumpHeight >= -j:
             neg = 1
             if playerJumpHeight < 0:
                 neg = -1
@@ -49,7 +52,7 @@ while True:
             playerJumpHeight -= 1
         else:
             playerIsJumping = False
-            playerJumpHeight = 10
+            playerJumpHeight = j
     
     #Draw everything
     window.fill(BLUE)
@@ -58,6 +61,12 @@ while True:
 
     #Frame rate
     clock.tick(60)
+
+while True:
+    main()
+
+if __name__ == "__main__":
+    main()
 
 
 
