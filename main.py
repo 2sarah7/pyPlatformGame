@@ -1,3 +1,5 @@
+#TODO - find some way so that the character can't go off the screen, add more platforms, add different levels and things that can kill the charater and make you have to start the level over
+
 import pygame
 import sys
 
@@ -27,8 +29,8 @@ playerIsJumping = False
 
 #creates platforms the character moves on
 platforms = [
-    {"x": 0, "y": 600, "width": 800, "height": 10},
-    {"x": 300, "y": 500, "width": 200, "height": 10}
+    {"x": 0, "y": WINDOW_HEIGHT, "width": 800, "height": 10}, #base platform - necessary bc otherwise character just falls through bottom of screen
+    {"x": 300, "y": 500, "width": 300, "height": 10}
 ]
 
 def main():
