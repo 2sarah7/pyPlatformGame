@@ -5,6 +5,8 @@ import sys
 pygame.font.init()
 clock = pygame.time.Clock()
 
+#Game Variables
+
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
@@ -18,10 +20,16 @@ PLAYER_HEIGHT = 20
 playerX = WINDOW_HEIGHT // 2 - PLAYER_WIDTH // 2
 playerY = WINDOW_HEIGHT - PLAYER_HEIGHT
 player_vel = 5
+gravity_value = 5
 j = 8
 playerJumpHeight = j
 playerIsJumping = False
 
+#creates platforms the character moves on
+platforms = [
+    {"x": 0, "y": 600, "width": 800, "height": 10},
+    {"x": 300, "y": 500, "width": 200, "height": 10}
+]
 
 def main():
     global playerX, playerY, playerJumpHeight, playerIsJumping
@@ -62,6 +70,37 @@ def main():
     
     #Draw everything
     window.fill(BLUE)
+
+    player_rect = pygame.Rect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT)
+    #flag to check if player is colliding with any platforms
+    colliding_with_platform = False 
+    
+    
+    #Draw platforms
+    for platform in platforms: 
+        pygame.draw.rect(window, WHITE, (platform["x"], platform["y"], platform["width"], platform["height"]))
+
+    #Platform behavior
+    for platform in platforms:
+        platform_rect = pygame.Rect(platform["x"], platform["y"], platform["width"], platform["height"])
+        
+        if player_rect.colliderect(platform_rect):
+            #when colliding with platform, stop falling
+            playerIsJumping = False
+            playerJumpHeight = j
+            colliding_with_platform = True
+            playerY = platform["y"] - PLAYER_HEIGHT + 2
+            break
+    
+    
+    #allows the player to jump
+    if keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]:
+        if not playerIsJumping:
+            playerIsJumping = True
+            
+    if not colliding_with_platform:
+        playerY += gravity_value
+            
     pygame.draw.rect(window, WHITE, (playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT))
     pygame.display.update()
 
