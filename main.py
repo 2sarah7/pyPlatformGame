@@ -1,5 +1,5 @@
-#TODO - find some way so that the character can't go off the screen, add more platforms, add different levels and things that can kill the charater and make you have to start the level over
-
+#TODO - add more platforms, create obstacles, make things to collect, add diffferent levels
+#make game prettier - make it more like a falling maze maybe? 
 import pygame
 import sys
 
@@ -13,7 +13,7 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 
 WINDOW_HEIGHT = 600
-WINDOW_WIDTH = 800
+WINDOW_WIDTH = 1000
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Platformer Game")
 
@@ -27,10 +27,16 @@ j = 8
 playerJumpHeight = j
 playerIsJumping = False
 
-#creates platforms the character moves on
+#dictionary creates platforms the character moves on
+#this one is level 1 - to do multiple levels will probably have multiple platform lists
 platforms = [
-    {"x": 0, "y": WINDOW_HEIGHT, "width": 800, "height": 10}, #base platform - necessary bc otherwise character just falls through bottom of screen
-    {"x": 300, "y": 500, "width": 300, "height": 10}
+    {"x": 0, "y": WINDOW_HEIGHT, "width": WINDOW_WIDTH, "height": 10}, #base platform - necessary bc otherwise character just falls through bottom of screen
+    {"x": 200, "y": WINDOW_HEIGHT - 120, "width": 600, "height": 10},
+    {"x": 30, "y": WINDOW_HEIGHT - 60, "width": 200, "height": 10},
+    {"x": WINDOW_WIDTH - 230, "y": WINDOW_HEIGHT - 180, "width": 200, "height": 10},
+    {"x": 200, "y": WINDOW_HEIGHT - 240, "width": 600, "height": 10},
+    {"x": 30, "y": WINDOW_HEIGHT - 300, "width": 200, "height": 10},
+    {"x": 200, "y": WINDOW_HEIGHT - 360, "width": 600, "height": 10}
 ]
 
 def main():
@@ -44,9 +50,9 @@ def main():
 
     #Player movement
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+    if keys[pygame.K_LEFT] and playerX - player_vel > 0 or keys[pygame.K_a] and playerX - player_vel > 0: #left
         playerX -= player_vel
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+    if keys[pygame.K_RIGHT] and playerX + player_vel + PLAYER_WIDTH < WINDOW_WIDTH or keys[pygame.K_d] and playerX + player_vel + PLAYER_WIDTH < WINDOW_WIDTH:
         playerX += player_vel
 
     #Player jump
