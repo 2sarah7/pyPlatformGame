@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 #Game Variables
 
 WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
+BLUE = (214, 5, 237)
 
 WINDOW_HEIGHT = 600
 WINDOW_WIDTH = 1000
