@@ -20,9 +20,11 @@ pygame.display.set_caption("Platformer Game")
 PLAYER_WIDTH = 20
 PLAYER_HEIGHT = 20
 playerX = WINDOW_HEIGHT // 2 - PLAYER_WIDTH // 2
-playerY = WINDOW_HEIGHT - PLAYER_HEIGHT
-player_vel = 5
-gravity_value = 5
+playerY = 5
+playerColor = WHITE
+
+player_vel = 5 
+gravity_value = 2
 j = 8
 playerJumpHeight = j
 playerIsJumping = False
@@ -30,13 +32,13 @@ playerIsJumping = False
 #dictionary creates platforms the character moves on
 #this one is level 1 - to do multiple levels will probably have multiple platform lists
 platforms = [
-    {"x": 0, "y": WINDOW_HEIGHT, "width": WINDOW_WIDTH, "height": 10}, #base platform - necessary bc otherwise character just falls through bottom of screen
-    {"x": 200, "y": WINDOW_HEIGHT - 120, "width": 600, "height": 10},
-    {"x": 30, "y": WINDOW_HEIGHT - 60, "width": 200, "height": 10},
-    {"x": WINDOW_WIDTH - 230, "y": WINDOW_HEIGHT - 180, "width": 200, "height": 10},
-    {"x": 200, "y": WINDOW_HEIGHT - 240, "width": 600, "height": 10},
-    {"x": 30, "y": WINDOW_HEIGHT - 300, "width": 200, "height": 10},
-    {"x": 200, "y": WINDOW_HEIGHT - 360, "width": 600, "height": 10}
+    {"x": 0, "y": WINDOW_HEIGHT, "width": WINDOW_WIDTH, "height": 10} #base platform - necessary bc otherwise character just falls through bottom of screen
+    #{"x": 200, "y": WINDOW_HEIGHT - 120, "width": 600, "height": 10},
+    #{"x": 30, "y": WINDOW_HEIGHT - 60, "width": 200, "height": 10},
+    #{"x": WINDOW_WIDTH - 230, "y": WINDOW_HEIGHT - 180, "width": 200, "height": 10},
+    #{"x": 200, "y": WINDOW_HEIGHT - 240, "width": 600, "height": 10},
+    #{"x": 30, "y": WINDOW_HEIGHT - 300, "width": 200, "height": 10},
+    #{"x": 200, "y": WINDOW_HEIGHT - 360, "width": 600, "height": 10}
 ]
 
 def main():
@@ -63,14 +65,16 @@ def main():
             playerIsJumping = True
             #Becuae it is true, the code now runs the else block
     else:
-        #Makes the character jump in a positive direction until at playerJumpHeight
-        if playerJumpHeight >= -j:
+        #Makes the character jump in a positive direction until at playerJumpHeight 
+        # + j/2 makes it so that you can climb by jumping
+        if playerJumpHeight >= -j + j/2:
             neg = 1
             if playerJumpHeight < 0:
                 neg = -1
             #Creates parabloic jump trajectory and neg controls direction (up or down)
             playerY -= (playerJumpHeight  ** 2) * 0.5 * neg
             playerJumpHeight -= 1
+            
         else:
             #Once jump is done, playerIsJumping is set to false again
             playerIsJumping = False
@@ -109,7 +113,7 @@ def main():
     if not colliding_with_platform:
         playerY += gravity_value
             
-    pygame.draw.rect(window, WHITE, (playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    pygame.draw.rect(window, playerColor, (playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT))
     pygame.display.update()
 
     #Frame rate
